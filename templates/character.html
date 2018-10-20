@@ -1,0 +1,67 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+{% with flash_messages = get_flashed_messages() %}
+{% if flash_messages %}
+{% for msg in flash_messages %}
+<div class="alert alert-danger alert-dismissible fade show col-md-4 mx-auto">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	{{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="container-fluid mb-5">
+	<h1>{{ charac_data['nick'] }}</h1>
+	<div class="row">
+		<div class="col-md-2 mx-3 text-success border-success border-right">
+			<img src="/static/images/characters/{{charac_data['animeography'][0]['name']}}/{{charac_data['name_char']}}.jpg">
+			<hr><!--
+			<form action="#">
+				<button class="btn btn-block border-0 btn-outline-success" type="submit">Add to Favorites</button>
+			</form>-->
+			<div class="mt-3">
+				<h5><strong>Animeography</strong></h5>
+				<hr class="bg-light">
+				{% for i in charac_data['animeography'] %}
+				<h5><a href="/anime/id{{i['id']}}" class="text-success"><u>{{i['name']}}</u></a></h5>
+				<p>&emsp;&emsp;{{i['role']}}</p>
+				<br>
+				{% endfor %}
+			</div><!--
+			<div class="mt-3">
+				<h5><strong>Mangaography</strong></h5>
+				<hr class="bg-light">
+				<h5><a href="#" class="nav-link text-success">Manga 1</a></h5>
+				<p>&emsp;&emsp;Role</p>
+				<br>
+			</div>-->
+		</div>
+		<div class="col-md-9 mx-3 text-success">
+			<div class="container-fluid border-success">
+				<div class="row">
+					<h4>{{charac_data['name_char']}}</h4>
+					<div class="col-md-12 border-top">
+						<p class="mt-3">
+							{{charac_data['data']}}
+						</p>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<h4>Voice Actors</h4>
+					<div class="container-fluid">
+						<div class="row my-1 border-top">
+							<div class="col-md-1 my-2" >
+								<img src="/static/images/characters/{{charac_data['animeography'][0]['name']}}/{{charac_data['name_actor']}}.jpg" hieght="96" width="69" >
+							</div>
+							<div class="col-md-10 my-2">
+								<h5>{{charac_data['name_actor']}}</h5>
+								&emsp;{{charac_data['nationality']}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

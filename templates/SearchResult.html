@@ -1,0 +1,44 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto mb-5">
+	<div class="col-md-6 mx-auto">
+		<form action="/searchresults" method="POST" class="form my-2 my-lg-0">
+			<input class="form-control" name="Anime" type="search" aria-label="Search" value="">
+			<div class="text-center">
+				<button class="btn btn-outline-success btn-lg my-2 my-sm-0 center" type="submit">Search</button>
+			</div>
+		</form>
+	</div>
+	<div class="row mx-auto text-success">
+		<div class="col-md-10 mx-auto">
+			{% if anime %}
+			{% for ani in anime %}
+			<div class="row border-bottom">
+				<div class="col-md-5 my-2">
+					<img src="/static/images/cover/{{ ani['name'] }}.jpg" class="img-thumbnail clearfix float-left border-0 rounded img-fluid " alt="Cover">
+					<h4 class="text-success">
+						&nbsp;<a href="/anime/id{{ani['id']}} " class="text-success" >{{ ani['name'] }}</a>
+						<br>
+						&nbsp;{{ ani['type'] }} ({{ ani['episodes_num'] }} episodes)
+						<br>
+						&nbsp;Score : {{ ani['score'] }}
+						<br>
+						&nbsp;Members: {{ ani['member'] }}
+						<br>
+					</h4>
+				</div>
+				<div class="col-md-7 my-2">
+					<h4>
+						Synopsis
+					</h4>
+					<p style="">{{ ani['synopsis'] }}</p>
+				</div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<h1 class="display-3 text-center mt-3" > Sorry!! No Results Found!!</h1>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

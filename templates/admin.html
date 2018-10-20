@@ -1,0 +1,715 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<script type="text/javascript">
+	$('document').ready(function () {
+    toggleFields(); // call this first so we start out with the correct visibility depending on the selected form values
+    // this will call our toggleFields function every time the selection value of our other field changes
+    $("#charsA_num").change(function () {
+    	toggleFields();
+    });
+    $("#charsM_num").change(function () {
+    	toggleFields();
+    });
+
+});
+// this toggles the visibility of other server
+function toggleFields() {
+	if ($("#charsA_num").val() == "1" || $("#charsA_num").val() == "2"  )
+	{
+		$("#charA_12").show();
+		$("#charA_34").hide();
+		$("#charA_56").hide();
+		$("#charA_78").hide();
+	}
+	else if ($("#charsA_num").val() == "3" || $("#charsA_num").val() == "4")
+	{
+		$("#charA_12").show();
+		$("#charA_34").show();
+		$("#charA_56").hide();
+		$("#charA_78").hide();
+	}
+	else if ($("#charsA_num").val() == "5" || $("#charsA_num").val() == "6")
+	{
+		$("#charA_12").show();
+		$("#charA_34").show();
+		$("#charA_56").show();
+		$("#charA_78").hide();
+	}
+	else if ($("#charsA_num").val() == "7" || $("#charsA_num").val() == "8")
+	{
+		$("#charA_12").show();
+		$("#charA_34").show();
+		$("#charA_56").show();
+		$("#charA_78").show();
+	}
+	if ($("#charsM_num").val() == "1" || $("#charsM_num").val() == "2"  )
+	{
+		$("#charM_12").show();
+		$("#charM_34").hide();
+		$("#charM_56").hide();
+		$("#charM_78").hide();
+	}
+	else if ($("#charsM_num").val() == "3" || $("#charsM_num").val() == "4")
+	{
+		$("#charM_12").show();
+		$("#charM_34").show();
+		$("#charM_56").hide();
+		$("#charM_78").hide();
+	}
+	else if ($("#charsM_num").val() == "5" || $("#charsM_num").val() == "6")
+	{
+		$("#charM_12").show();
+		$("#charM_34").show();
+		$("#charM_56").show();
+		$("#charM_78").hide();
+	}
+	else if ($("#charsM_num").val() == "7" || $("#charsM_num").val() == "8")
+	{
+		$("#charM_12").show();
+		$("#charM_34").show();
+		$("#charM_56").show();
+		$("#charM_78").show();
+	}
+};
+</script>
+<div class="container-fluid border-success mb-5 ">
+	<!-- Nav tabs -->
+	<div class="container col-md-10">
+		<ul class="nav">
+			<li class="nav-item mx-2 my-2">
+				<a class="nav-link  px-0 py-0" data-toggle="pill" href="#users">
+					<button class="btn btn-block btn-outline-success border-0">
+						Users
+					</button>
+				</a>
+			</li>
+			<li class="nav-item mx-2 my-2">
+				<a class="nav-link px-0 py-0" data-toggle="pill" href="#anime">
+					<button class="btn btn-block btn-outline-success border-0">
+						Anime
+					</button>
+				</a>
+			</li>
+			<li class="nav-item mx-2 my-2">
+				<a class="nav-link px-0 py-0" data-toggle="pill" href="#manga">
+					<button class="btn btn-block btn-outline-success border-0">
+						Manga
+					</button>
+				</a>
+			</li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane active container-fluid" id="users">
+				<div class="container-fluid">
+					<h3>Users</h3>
+					<hr>
+					<div class="row">
+						<div class="col-md-1"><h4>Index</h4></div>
+						<div class="col-md-3"><h4>Username</h4></div>
+						<div class="col-md-3"><h4>Name</h4></div>
+						<div class="col-md-3"><h4>E-mail</h4></div>
+						<div class="col-md-2"><h4>Delete</h4></div>
+					</div>
+					<hr>
+					{% for i in range(0,num_user) %}
+					<div class="row mt-3 pb-2">
+						<div class="col-md-1">{{i+1}}</div>
+						<div class="col-md-3"><a href="/userprofile/{{users[i]['username']}}" class="text-dark">{{users[i]['username']}}</a></div>
+						<div class="col-md-3">{{users[i]['name']}}</div>
+						<div class="col-md-3">{{users[i]['email']}}</div>
+						<div class="col-md-2">
+							<form action="#" method="POST">
+								<input type="hidden" name="del_username" value="{{users[i]['username']}}">
+								<button class="btn btn-block btn-success" type="submit">Delete This User</button>
+							</form>
+						</div>
+					</div>
+					<hr>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="tab-pane container-fluid" id="anime">
+				<div class="container-fluid">
+					<h3>
+						<ul class="nav">
+							<li class="nav-item ml-2 my-2 mr-auto">
+								<a class="nav-link  px-0 py-0" data-toggle="pill" href="#animes">
+									<button class="btn btn-block btn-outline-success border-0">
+										Anime
+									</button>
+								</a>
+							</li>
+							<li class="nav-item mx-2 my-2">
+								<a class="nav-link px-0 py-0" data-toggle="pill" href="#add_anime">
+									<button class="float-right btn btn-success" type="button">
+										<small><i>Add anime</i></small>
+									</button>
+								</a>
+							</li>
+						</ul>
+					</h3>
+					<div class="tab-content">
+						<div class="tab-pane active container-fluid" id="animes">
+							<div class="row">
+								<div class="col-md-1"><h4>Index</h4></div>
+								<div class="col-md-2"><h4>Name</h4></div>
+								<div class="col-md-2"><h4>Status</h4></div>
+								<div class="col-md-2"><h4>Type</h4></div>
+								<div class="col-md-2"><h4>Studio</h4></div>
+								<div class="col-md-2"><h4>Delete</h4></div>
+							</div>
+							<hr>
+							{% for i in range(0,num_anime) %}
+							<div class="row mt-3 pb-2">
+								<div class="col-md-1">{{i+1}}</div>
+								<div class="col-md-2"><a href="/anime/id{{ anime[i]['id'] }}" class="text-dark">{{anime[i]['name']}}</a></div>
+								<div class="col-md-2">{{anime[i]['status']}}</div>
+								<div class="col-md-2">{{anime[i]['type']}}</div>
+								<div class="col-md-2">{{anime[i]['studios']}}</div>
+								<div class="col-md-2">
+									<form action="#" method="POST">
+										<input type="hidden" name="anime_id" value="{{anime[i]['id']}}">
+										<button class="btn btn-block btn-success" type="submit">Delete This Anime</button>
+									</form>
+								</div>
+							</div>
+							<hr>
+							{% endfor %}
+						</div>
+						<div class="tab-pane container-fluid" id="add_anime">
+							<h3 class="text-success" >Add Anime</h3>
+							<div class="row">
+								<form action="#" class="form w-100" method="POST">
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="name_eng" placeholder="Name">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="name_jap" placeholder="Japanese Name">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="synonyms" placeholder="Synonyms">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<select class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="cast_type">
+												<option selected>Anime</option>
+												<option>Movie</option>
+											</select>
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="number" min="0" class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="episodes_num" placeholder="How many episodes are there in this anime?" value="0">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status" placeholder="Status">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="aired" placeholder="Aired on">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="premiered" placeholder="Premiered on">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="broadcast" placeholder="Broadcast time">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-6">
+											<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="producers" placeholder="Producers"></textarea>
+										</div>
+										<div class="mx-auto my-5 form-group col-md-6">
+											<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="licensors" placeholder="Licensors"></textarea>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-4">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="studio" placeholder="Studio">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-4">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="source" placeholder="Source">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-4">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="duration" placeholder="Duration">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-4">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="rating" placeholder="Rating">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-4">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="genres" placeholder="Genres">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-4">
+											<select class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char_num" id="charsA_num">
+												<option value="1" >1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-12">
+											<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="synopsis" placeholder="Synopsis"></textarea>
+										</div>
+									</div>
+
+									<div class="form-row" id="charA_12">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char1_name" placeholder="Character 1 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char1_role" placeholder="Character 1 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act1_name" placeholder="Voice Actor 1 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act1_language" placeholder="Voice Actor 1 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char1_data" placeholder="Character 1 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char2_name" placeholder="Character 2 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char2_role" placeholder="Character 2 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act2_name" placeholder="Voice Actor 2 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act2_language" placeholder="Voice Actor 2 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char2_data" placeholder="Character 2 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charA_34">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char3_name" placeholder="Character 3 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char3_role" placeholder="Character 3 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act3_name" placeholder="Voice Actor 3 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act3_language" placeholder="Voice Actor 3 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char3_data" placeholder="Character 3 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char4_name" placeholder="Character 4 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char4_role" placeholder="Character 4 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act4_name" placeholder="Voice Actor 4 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act4_language" placeholder="Voice Actor 4 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char4_data" placeholder="Character 4 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charA_56">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char5_name" placeholder="Character 5 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char5_role" placeholder="Character 5 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act5_name" placeholder="Voice Actor 5 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act5_language" placeholder="Voice Actor 5 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char5_data" placeholder="Character 5 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char6_name" placeholder="Character 6 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char6_role" placeholder="Character 6 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act6_name" placeholder="Voice Actor 6 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act6_language" placeholder="Voice Actor 6 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char6_data" placeholder="Character 6 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charA_78">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char7_name" placeholder="Character 7 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char7_role" placeholder="Character 7 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act7_name" placeholder="Voice Actor 7 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act7_language" placeholder="Voice Actor 7 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char7_data" placeholder="Character 7 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char8_name" placeholder="Character 8 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char8_role" placeholder="Character 8 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act8_name" placeholder="Voice Actor 8 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="act8_language" placeholder="Voice Actor 8 Language">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char8_data" placeholder="Character 8 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-block btn-success" type="submit">Add Anime</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane container-fluid" id="manga">
+				<div class="container-fluid">
+					<h3>
+						<ul class="nav">
+							<li class="nav-item ml-2 my-2 mr-auto">
+								<a class="nav-link  px-0 py-0" data-toggle="pill" href="#mangas">
+									<button class="btn btn-block btn-outline-success border-0">
+										Manga
+									</button>
+								</a>
+							</li>
+							<li class="nav-item mx-2 my-2">
+								<a class="nav-link px-0 py-0" data-toggle="pill" href="#add_manga">
+									<button class="float-right btn btn-success" type="button">
+										<small><i>Add Manga</i></small>
+									</button>
+								</a>
+							</li>
+						</ul>
+					</h3>
+					<div class="tab-content">
+						<div class="tab-pane active container-fluid" id="mangas">
+							<div class="row">
+								<div class="col-md-1"><h4>Index</h4></div>
+								<div class="col-md-2"><h4>Name</h4></div>
+								<div class="col-md-2"><h4>Status</h4></div>
+								<div class="col-md-2"><h4>Type</h4></div>
+								<div class="col-md-2"><h4>Serialization</h4></div>
+								<div class="col-md-1"><h4>Delete</h4></div>
+							</div>
+							{% for i in range(0,num_manga) %}
+							<div class="row mt-3 pb-2">
+								<div class="col-md-1">{{ i+1 }}</div>
+								<div class="col-md-2"><a href="/manga/id{{ manga[i]['id'] }}" class="text-dark">{{ manga[i]['name'] }}</a></div>
+								<div class="col-md-2">{{ manga[i]['status'] }}</div>
+								<div class="col-md-2">{{ manga[i]['type'] }}</div>
+								<div class="col-md-2">{{ manga[i]['serialization'] }}</div>
+								<div class="col-md-2">
+									<form action="#" method="POST">
+										<input type="hidden" name="manga_id" value="{{ manga[i]['id'] }}">
+										<button class="btn btn-block btn-success" type="submit">Delete This Manga</button>
+									</form>
+								</div>
+							</div>
+							{% endfor %}
+							<hr>
+						</div>
+						<div class="tab-pane container-fluid" id="add_manga">
+							<h3 class="text-success" >Add Manga</h3>
+							<div class="row">
+								<form action="#" class="form w-100" method="POST">
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="name_eng" placeholder="Name">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="altername_eng" placeholder="Alternative Name">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="name_jap" placeholder="Japanese Name">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-6">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="synonyms" placeholder="Synonyms">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="number" min="0" class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="volumes_num" placeholder="How many volumes are there in this manga?" value="0">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="number" min="0" class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="chapters_num" placeholder="How many chapters are there in this manga?" value="0">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status" placeholder="Status">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<select class="form-control text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char_num" id="charsM_num">
+												<option value="1" >1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="published" placeholder="Published on">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="authors" placeholder="Authors">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="serialization" placeholder="Serialization">
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="cast_type" placeholder="Type">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="mx-auto my-5 form-group col-md-9">
+											<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="synopsis" placeholder="Synopsis"></textarea>
+										</div>
+										<div class="mx-auto my-5 form-group col-md-3">
+											<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="genres" placeholder="Genres">
+										</div>
+									</div>
+									<div class="form-row" id="charM_12">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char1_name" placeholder="Character 1 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char1_role" placeholder="Character 1 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char1_data" placeholder="Character 1 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char2_name" placeholder="Character 2 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char2_role" placeholder="Character 2 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char2_data" placeholder="Character 2 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charM_34">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char3_name" placeholder="Character 3 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char3_role" placeholder="Character 3 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char3_data" placeholder="Character 3 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char4_name" placeholder="Character 4 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char4_role" placeholder="Character 4 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char4_data" placeholder="Character 4 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charM_56">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char5_name" placeholder="Character 5 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char5_role" placeholder="Character 5 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char5_data" placeholder="Character 5 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char6_name" placeholder="Character 6 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char6_role" placeholder="Character 6 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char6_data" placeholder="Character 6 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row" id="charM_78">
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char7_name" placeholder="Character 7 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char7_role" placeholder="Character 7 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char7_data" placeholder="Character 7 Data"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="container-fluid col-md-6">
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char8_name" placeholder="Character 8 Name">
+												</div>
+												<div class="mx-auto my-5 form-group col-md-6">
+													<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="char8_role" placeholder="Character 8 Role">
+												</div>
+											</div>
+											<div class="row">
+												<div class="mx-auto my-5 form-group col-md-12">
+													<textarea class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" rows="3" name="char8_data" placeholder="Character 8 Data"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-block btn-success" type="submit">Add Manga</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+{% with flash_messages = get_flashed_messages() %}
+{% if flash_messages %}
+{% for msg in flash_messages %}
+<div class="alert alert-danger alert-dismissible fade show col-md-4 mx-auto">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	{{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="container mt-5" >
+	<div class="row" >
+		<div class="px-0 card col-md-6 mx-auto text-dark border-0" style="background-color: transparent;">
+			<h2 class="text-center my-5 text-success"><strong>Login</strong></h2>
+			<form action="/" class="needs-validation" novalidate method="POST">
+				<div class="form-group mx-auto my-5 col-md-8">
+					<input type="text" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;" name="username" id="username" placeholder="Enter Username" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Username here.
+					</div>
+				</div>
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="password" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;"  id="loginpwd" name="pwd" placeholder="Enter Password" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Password here.
+					</div>
+				</div>
+				<div class="form-group mx-auto col-md-8 my-5 form-check">
+					<label class="form-check-label text-success">
+						<input class="form-check-input" type="checkbox" name="remember" value="on"> Remember me
+					</label>
+				</div>
+				<div class="form-group text-center my-5 col-md-8 mx-auto">
+					<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Login</button>
+				</div>
+			</form>
+		</div>
+		<div class="card px-0 col-md-6 mx-auto text-dark border-0" style="background-color: transparent;">
+			<h2 class="text-center text-success"><strong>Register</strong></h2>
+			<form action="/topanime" class="needs-validation" novalidate method="POST">
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="text" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;" name="name" id="Name" placeholder="Enter Name" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Name here.
+					</div>
+				</div>
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="text" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;"  name="username" id="username" placeholder="Enter Username" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Username here.
+					</div>
+				</div>
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="email" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;" name="email" id="E-mail" placeholder="Enter E-mail" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Email here.
+					</div>
+				</div>
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="password" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;" name="password" id="signuppwd" placeholder="Enter Password" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Password here.
+					</div>
+				</div>
+				<div class="form-group col-md-8 mx-auto my-5">
+					<input type="password" class="form-control border-success border-right-0 border-top-0 border-left-0" style="background-color: transparent;" name="repassword" id="repwd" placeholder="Re-enter Password" required>
+					<div class="valid-tooltip">
+						Nice!
+					</div>
+					<div class="invalid-tooltip">
+						Please Fill your Password here.
+					</div>
+				</div>
+				<div class="form-group text-center col-md-8 my-5 mx-auto">
+					<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Sign Up</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+    	form.addEventListener('submit', function(event) {
+    		if (form.checkValidity() === false) {
+    			event.preventDefault();
+    			event.stopPropagation();
+    		}
+    		form.classList.add('was-validated');
+    	}, false);
+    });
+}, false);
+})();
+</script>
+
+{% endblock %}

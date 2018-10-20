@@ -1,0 +1,56 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto">
+	<div class="col-md-6 mx-auto">
+		<form action="/mangasearchresults" method="POST" class="form my-2 my-lg-0">
+			<input class="form-control" name="Manga" type="search" aria-label="Search" value="">
+			<div class="text-center">
+				<button class="btn btn-outline-success btn-lg my-2 my-sm-0 center" type="submit">Search</button>
+			</div>
+		</form>
+	</div>
+	<div class="row mx-auto text-success">
+		<div class="col-md-10 mx-auto">
+			{% if manga %}
+			{% for i in manga %}
+			<div class="row border-bottom">
+				<div class="col-md-4 my-2">
+					<img src="/static/images/manga/{{ i['name'] }}.jpg" class="img-thumbnail clearfix float-left border-0 rounded img-fluid " alt="Cover">
+					<h4 class="text-success">
+						&nbsp;<a href="/manga/id{{i['manga_id']}}" class="text-success" >{{ i['name'] }}</a>
+						<br>
+						&nbsp;Type : {{ i['type'] }}
+						<br>
+						{%- if  i['chapters_num'] >=0 -%}
+						&nbsp;No. of chapters : {{ i['chapters_num'] }}
+						{%- else -%}
+						&nbsp;No. of chapters : Unknown
+						{%- endif -%}
+						<br>
+						{%- if  i['volumes_num'] >=0 -%}
+						&nbsp;No. of volumes : {{ i['volumes_num'] }}
+						{%- else -%}
+						&nbsp;No. of chapters : Unknown
+						{%- endif -%}
+						<br>
+						&nbsp;Score : {{ i['score'] }}
+						<br>
+						&nbsp;Members: {{ i['member'] }}
+						<br>
+						&nbsp;Times Reread : {{ i['reread'] }}
+						<br>
+					</h4>
+				</div>
+				<div class="col-md-6 my-2">
+					<h4>
+						Synopsis
+					</h4>
+					<p style="">{{ i['synopsis'] }}</p>
+				</div>
+			</div>
+			{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

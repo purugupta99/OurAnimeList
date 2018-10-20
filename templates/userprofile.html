@@ -1,0 +1,723 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<style type="text/css">
+#BODY{
+	background-color: white;
+	background-image: initial;
+}
+</style>
+<div class="container-fluid mb-5">
+	<div class="row">
+		<div class="col-md-2 text-success border-success border-right">
+			<div class="w-100 bg-secondary text-center mx-auto" style="max-height: 320px; max-width: 225px;">
+				{% if img_present == 1 %}
+				<img src="/static/profilepics/{{ username }}.jpeg" height="320" width="225" class="mx-auto">
+				{% else %}
+				<img src="/static/userimg.png" height="320" width="225">
+				{% endif %}
+			</div>
+			<hr>
+			<div>
+				<a href="/userprofile/{{ username }}/anime_list">
+					<button class="btn btn-outline-success border-0"><h4>Anime List</h4></button>
+				</a>
+				<a href="/userprofile/{{ username }}/manga_list">
+					<button class="btn btn-outline-success border-0"><h4>Manga List</h4></button>
+				</a>
+			</div>
+			<a href="#statistics" ><button class="btn btn-outline-success border-0 w-100 text-left text-truncate"><h3>Statistics</h3></button></a>
+			<a href="#reviews"><button class="btn btn-outline-success border-0 w-100 text-left text-truncate"><h3>Reviews</h3></button></a>
+			<a href="#recommendations"><button class="btn btn-outline-success border-0 w-100 text-left text-truncate"><h3>Recommendations</h3></button></a>
+		</div>
+		<div class="col-md-8 text-success border-success border-right">
+			<div class="container-fluid border-success border-bottom">
+				<ul class="nav nav-pill">
+					<li class="nav-item mr-auto">
+						<a class="nav-link text-success" data-toggle="pill" href="#bio">
+							<button class="btn btn-block btn-outline-success border-0">
+								Bio
+							</button>
+						</a>
+					</li>
+					{% if current_user.username == username %}
+					<li class="nav-item">
+						<a class="nav-link text-success" data-toggle="pill" href="#editprof">
+							<button class="btn btn-block btn-outline-success border-0">
+								Edit Profile
+							</button>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active container mb-3" id="bio" >
+						{{ bio }}
+					</div>
+					{% if current_user.username == username %}
+					<div class="tab-pane container" id="editprof">
+						<ul class="nav nav-pill">
+							<li class="nav-item">
+								<a class="nav-link text-success" data-toggle="pill" href="#name">
+									<button class="btn btn-block btn-outline-success border-0">
+										Name
+									</button>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-success" data-toggle="pill" href="#password">
+									<button class="btn btn-block btn-outline-success border-0">
+										Password
+									</button>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-success" data-toggle="pill" href="#Biography">
+									<button class="btn btn-block btn-outline-success border-0">
+										Bio
+									</button>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-success" data-toggle="pill" href="#gender">
+									<button class="btn btn-block btn-outline-success border-0">
+										Gender
+									</button>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-success" data-toggle="pill" href="#profilepic">
+									<button class="btn btn-block btn-outline-success border-0">
+										Profile Picture
+									</button>
+								</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div class="tab-pane container" id="name">
+								<form action="#" method="POST" class="needs-validation" novalidate>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="name" placeholder="Enter New Name" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill The New Name here.
+										</div>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="passwd1" placeholder="Enter Your Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your Password here.
+										</div>
+									</div>
+									<div class="form-group text-center col-md-6 my-5 mx-auto">
+										<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Change</button>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane container" id="password">
+								<form action="#" method="POST" class="needs-validation" novalidate>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="currpasswd" placeholder="Enter Current Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your Current Password here.
+										</div>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="newpasswd" placeholder="Enter New Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your New Password here.
+										</div>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="repasswd" placeholder="Re-Enter New Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your New Password here.
+										</div>
+									</div>
+									<div class="form-group text-center col-md-6 my-5 mx-auto">
+										<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Change</button>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane container" id="Biography">
+								<form action="#" method="POST" class="needs-validation" novalidate>
+									<div class="form-group text-center col-md-6 mx-auto my-5">
+										<textarea class="form-control" rows="5" id="editbio" name="bio" placeholder="Enter Your Bio Here"></textarea>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="passwd3" placeholder="Enter Your Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your Password here.
+										</div>
+									</div>
+									<div class="form-group text-center col-md-6 my-5 mx-auto">
+										<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Change</button>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane container" id="gender">
+								<form action="#" method="POST" class="needs-validation" novalidate>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<select class="form-control form-control-lg border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="gender">
+											<option selected>Select Your Gender</option>
+											<option>Male</option>
+											<option>Female</option>
+											<option>Other</option>
+										</select>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="passwd4" placeholder="Enter Your Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your Password here.
+										</div>
+									</div>
+									<div class="form-group text-center col-md-6 my-5 mx-auto">
+										<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Change</button>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane container" id="profilepic">
+								<form action="#" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="file" name="profilepic" class="form-control-file form-control-lg" id="exampleFormControlFile1" required>
+									</div>
+									<div class="mx-auto my-5 form-group col-md-6">
+										<input type="password" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="passwd5" placeholder="Enter Your Password" required>
+										<div class="valid-tooltip">
+											Nice!
+										</div>
+										<div class="invalid-tooltip">
+											Please Fill your Password here.
+										</div>
+									</div>
+									<div class="form-group text-center col-md-6 my-5 mx-auto">
+										<button type="submit" class="btn rounded btn-block btn-rounded btn-success btn-lg" >Change</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>	
+			<div id="statistics" class="mt-3 container-fluid border-success border-bottom">
+				<h2>Statistics</h2>
+				<hr>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>Anime Stats</h3>
+							<table class="table table-hover">
+								<tr>
+									<td>Watching:</td>
+									<td>{{ dict['watching'] }}</td>
+									<td>Total Entries: </td>
+									<td>{{ dict['total'] }}</td>
+								</tr>
+								<tr>
+									<td>Completed:</td>
+									<td>{{ dict['completed'] }}</td>
+									<td>Rewatched: </td>
+									<td>{{ dict['rewatch'] }}</td>
+								</tr>
+								<tr>
+									<td>On-Hold:</td>
+									<td>{{ dict['onhold'] }}</td>
+									<td>Episodes: </td>
+									<td>{{ dict['episode'] }}</td>
+								</tr>
+								<tr>
+									<td>Dropped:</td>
+									<td>{{ dict['dropped'] }}</td>
+								</tr>
+								<tr>
+									<td>Plan to Watch:</td>
+									<td>{{ dict['planned'] }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-6">
+							<h3>Best Anime Scores</h3>
+							<table class="table table-hover">
+								{% for p in best_anime_score %}
+								<tr>
+									<td><a href="/anime/id{{ p['id'] }}" class="text-success" >{{ p['name'] }}</a></td>
+									<td>{{ p['score'] }}</td>
+								</tr>
+								{% endfor %}
+							</table> 
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>Manga Stats</h3>
+							<table class="table table-hover">
+								<tr>
+									<td>Reading:</td>
+									<td>{{dict_manga['reading']}}</td>
+									<td>Total Entries: </td>
+									<td>{{dict_manga['total']}}</td>
+								</tr>
+								<tr>
+									<td>Completed:</td>
+									<td>{{dict_manga['completed']}}</td>
+									<td>Reread: </td>
+									<td>{{dict_manga['reread']}}</td>
+								</tr>
+								<tr>
+									<td>On-Hold:</td>
+									<td>{{dict_manga['onhold']}}</td>
+									<td>Chapters: </td>
+									<td>{{dict_manga['chapter']}}</td>
+								</tr>
+								<tr>
+									<td>Dropped:</td>
+									<td>{{dict_manga['dropped']}}</td>
+									<td>Volumes:</td>
+									<td>{{dict_manga['volume']}}</td>
+								</tr>
+								<tr>
+									<td>Plan to Watch:</td>
+									<td>{{dict_manga['planned']}}</td>
+								</tr>
+							</table> 
+						</div>
+						<div class="col-md-6">
+							<h3>Best Manga Scores</h3>
+							<table class="table table-hover">
+								{% for p in best_manga_score %}
+								<tr>
+									<td><a href="/manga/id{{ p['id'] }}" class="text-success">{{ p['name'] }}</a></td>
+									<td>{{ p['score'] }}</td>
+								</tr>
+								{% endfor %}
+							</table> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="reviews" class="mt-3 container-fluid border-success border-bottom">
+				<h2>Anime Reviews</h2>
+				<hr>
+				{% for i in range(0,reviews_num,2) %}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md">
+								<h3 class="row">
+									<div class="col-md mr-auto">
+										<a href="/anime/id{{ reviews[i]['anime_id'] }}" class="text-success">
+											{{ reviews[i]['anime'] }}
+										</a>
+									</div>
+									{%- if current_user.username == reviews[i]['username']  -%}
+									<div class="col-md-2 text-right d-inline my-0">
+										<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReview">
+											<small><i>Edit</i></small>
+										</button>
+										<div class="modal fade" id="EditReview">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-dark">
+														<h4 class="modal-title">Edit Review</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" method="POST">
+															<div class="mx-auto my-5 form-group col-md-12">
+																<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews[i]['title'] }}">
+															</div>
+															<div class="form-group text-center col-md-12 mx-auto my-5">
+																<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews[i]['content'] }}</textarea>
+															</div>
+															<input type="hidden" name="edit_anime_review" value="{{reviews[i]['anime']}}">
+															<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endif %}
+								</h3>
+								<h4>{{ reviews[i]['title'] }}</h4>
+								&emsp;{{ reviews[i]['content'] }}
+								<div class="text-right">
+									{{ reviews[i]['elapsed'] }} {{ reviews[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ reviews[i]['username'] }}">{{ reviews[i]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% if reviews[i+1] %}
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md">
+								<h3 class="row">
+									<div class="col-md mr-auto">
+										<a href="/anime/id{{ reviews[i+1]['anime_id'] }}" class="text-success">
+											{{ reviews[i+1]['anime'] }}
+										</a>
+									</div>
+									{%- if current_user.username == reviews[i+1]['username']  -%}
+									<div class="col-md-2 text-right d-inline my-0">
+										<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReview">
+											<small><i>Edit</i></small>
+										</button>
+										<div class="modal fade" id="EditReview">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-dark">
+														<h4 class="modal-title">Edit Review</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" method="POST">
+															<div class="mx-auto my-5 form-group col-md-12">
+																<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews[i+1]['title'] }}">
+															</div>
+															<div class="form-group text-center col-md-12 mx-auto my-5">
+																<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews[i+1]['content'] }}</textarea>
+															</div>
+															<input type="hidden" name="edit_anime_review" value="{{reviews[i+1]['anime']}}">
+															<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endif %}
+								</h3>
+								<h4>{{ reviews[i+1].title }}</h4>
+								{{ reviews[i+1].content }}
+								<div>
+									{{ reviews[i+1]['elapsed'] }} {{ reviews[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ reviews[i+1]['username'] }}">{{ reviews[i+1]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<br>
+				{% endfor %}
+				<h2>Manga Reviews</h2>
+				<hr>
+				{% for i in range(0,reviews_manga_num,2) %}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md">
+								<h3 class="row">
+									<div class="col-md mr-auto">
+										<a href="/anime/id{{ reviews_manga[i]['manga_id'] }}" class="text-success">
+											{{ reviews_manga[i]['manga'] }}
+										</a>
+									</div>
+									{%- if current_user.username == reviews_manga[i]['username']  -%}
+									<div class="col-md-2 text-right d-inline my-0">
+										<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReviewManga">
+											<small><i>Edit</i></small>
+										</button>
+										<div class="modal fade" id="EditReviewManga">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-dark">
+														<h4 class="modal-title">Edit Review</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" method="POST">
+															<div class="mx-auto my-5 form-group col-md-12">
+																<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews_manga[i]['title'] }}">
+															</div>
+															<div class="form-group text-center col-md-12 mx-auto my-5">
+																<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews_manga[i]['content'] }}</textarea>
+															</div>
+															<input type="hidden" name="edit_manga_review" value="{{reviews_manga[i]['manga']}}">
+															<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endif %}
+								</h3>
+								<h4>{{ reviews_manga[i]['title'] }}</h4>
+								&emsp;{{ reviews_manga[i]['content'] }}
+								<div class="text-right">
+									{{ reviews_manga[i]['elapsed'] }} {{ reviews_manga[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ reviews_manga[i]['username'] }}">{{ reviews_manga[i]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% if reviews_manga[i+1] %}
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md">
+								<h3 class="row">
+									<div class="col-md mr-auto">
+										<a href="/anime/id{{ reviews_manga[i+1]['manga_id'] }}" class="text-success">
+											{{ reviews_manga[i+1]['manga'] }}
+										</a>
+									</div>
+									{%- if current_user.username == reviews_manga[i+1]['username']  -%}
+									<div class="col-md-2 text-right d-inline my-0">
+										<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReview">
+											<small><i>Edit</i></small>
+										</button>
+										<div class="modal fade" id="EditReview">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header bg-dark">
+														<h4 class="modal-title">Edit Review</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" method="POST">
+															<div class="mx-auto my-5 form-group col-md-12">
+																<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews_manga[i+1]['title'] }}">
+															</div>
+															<div class="form-group text-center col-md-12 mx-auto my-5">
+																<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews_manga[i+1]['content'] }}</textarea>
+															</div>
+															<input type="hidden" name="edit_anime_review" value="{{reviews_manga[i+1]['manga']}}">
+															<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endif %}
+								</h3>
+								<h4>{{ reviews_manga[i+1].title }}</h4>
+								{{ reviews_manga[i+1].content }}
+								<div>
+									{{ reviews_manga[i+1]['elapsed'] }} {{ reviews_manga[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ reviews_manga[i+1]['username'] }}">{{ reviews_manga[i+1]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<br>
+				{% endfor %}
+			</div>
+			<div id="recommendations" class="mt-3 container-fluid border-success border-bottom">
+				<h2>Anime Recommendations</h2>
+				<hr>
+				{% for i in range(0,recommend_num,2) %}
+				<div class="row">
+					{% if dict_recommend[i] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-6">
+								If you liked
+								<h4>
+									<a href="/anime/id{{dict_recommend[i]['anime_id']}}" class="text-success">
+										{{dict_recommend[i]['anime']}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-6">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{dict_recommend[i]['recommend_id']}}" class="text-success">
+										{{dict_recommend[i]['recommend_anime']}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{dict_recommend[i]['reason']}}
+						</h5>
+						<div class="text-right">
+							{{ dict_recommend[i]['elapsed'] }} {{ dict_recommend[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ dict_recommend[i]['username'] }}">{{ dict_recommend[i]['username'] }}</a> 
+						</div>
+					</div>
+					{% endif %}
+					{% if dict_recommend[i+1] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-6">
+								If you liked
+								<h4>
+									<a href="/anime/id{{dict_recommend[i+1]['anime_id']}}" class="text-success">
+										{{dict_recommend[i+1].anime}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-6">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{dict_recommend[i+1]['recommend_id']}}" class="text-success">
+										{{dict_recommend[i+1].recommend_anime}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{dict_recommend[i+1].reason}}
+						</h5>
+						<div class="text-right">
+							{{ dict_recommend[i+1]['elapsed'] }} {{ dict_recommend[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ dict_recommend[i+1]['username'] }}">{{ dict_recommend[i+1]['username'] }}</a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<hr>
+				{% endfor %}
+				<br>
+				<h2>Manga Recommendations</h2>
+				<hr>
+				{% for i in range(0,recommend_manga_num,2) %}
+				<div class="row">
+					{% if dict_recommend_manga[i] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-6">
+								If you liked
+								<h4>
+									<a href="/anime/id{{dict_recommend_manga[i]['manga_id']}}" class="text-success">
+										{{dict_recommend_manga[i]['manga']}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-6">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{dict_recommend_manga[i]['recommend_id']}}" class="text-success">
+										{{dict_recommend_manga[i]['recommended_manga']}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{dict_recommend_manga[i]['reason']}}
+						</h5>
+						<div class="text-right">
+							{{ dict_recommend_manga[i]['elapsed'] }} {{ dict_recommend_manga[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ dict_recommend_manga[i]['username'] }}">{{ dict_recommend_manga[i]['username'] }}</a> 
+						</div>
+					</div>
+					{% endif %}
+					{% if dict_recommend_manga[i+1] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-6">
+								If you liked
+								<h4>
+									<a href="/anime/id{{dict_recommend_manga[i+1]['manga_id']}}" class="text-success">
+										{{dict_recommend_manga[i+1].manga}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-6">
+								Then you might like
+								<h4>
+									<a href="/manga/id{{dict_recommend_manga[i+1]['recommend_id']}}" class="text-success">
+										{{dict_recommend_manga[i+1].recommended_manga}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{dict_recommend_manga[i+1].reason}}
+						</h5>
+						<div class="text-right">
+							{{ dict_recommend_manga[i+1]['elapsed'] }} {{ dict_recommend_manga[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ dict_recommend_manga[i+1]['username'] }}">{{ dict_recommend_manga[i+1]['username'] }}</a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<hr>
+				{% endfor %}
+			</div>
+			<br>
+			<br>
+			<br>
+		</div>
+		<div class="col-md-2 text-success">
+			<h3>Suggested Anime</h3>
+			{% if suggested_anime %}
+			{% for i in suggested_anime %}
+			<div class="row mx-auto">
+				<div class="col-md-12 ml-auto">
+					<img src="/static/images/cover/{{i.name_eng}}.jpg" height="320" width="225">
+					<div class="text-center">
+						<a href="/anime/id{{i.id}}" class="text-success">
+							{{i.name_eng}}
+						</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<h3>No Suggestions Right Now!</h3>
+			{% endif %}
+			<br>
+			<br>
+			<h3>Suggested Manga</h3>
+			{% if suggested_manga %}
+			{% for p in suggested_manga %}
+			<div class="row mx-auto">
+				<div class="col-md-12 ml-auto">
+					<img src="/static/images/manga/{{ p.name_eng }}.jpg" height="320" width="225">
+					<div class="text-center">
+						<a href="/manga/id{{ p.id }}" class="text-success">
+							{{ p.name_eng }}
+						</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<h3>No Suggestions Right Now!</h3>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+    	form.addEventListener('submit', function(event) {
+    		if (form.checkValidity() === false) {
+    			event.preventDefault();
+    			event.stopPropagation();
+    		}
+    		form.classList.add('was-validated');
+    	}, false);
+    });
+}, false);
+})();
+</script>
+{% endblock %}

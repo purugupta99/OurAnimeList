@@ -1,0 +1,11 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<h1 class="display-4 text-center text-success">Search Manga</h1>
+<div class="container">
+	<form action="/mangasearchresults" method="POST" class="form my-2 my-lg-0">
+		<input class="form-control" name="Manga" type="search" placeholder="Search" aria-label="Search">
+		<div class="text-center">
+		<button class="btn btn-outline-success btn-lg my-2 my-sm-0 center" type="submit">Search</button></div>
+	</form>
+</div>
+{% endblock %}

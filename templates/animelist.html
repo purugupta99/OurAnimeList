@@ -1,0 +1,152 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto mb-5">
+	<div class="row mx-auto text-success">
+		<div class="col-md-11 mx-auto">
+			{% if dict_list %}
+			{% for i in dict_list %}
+			<div class="row border-bottom">
+				<div class="col-md-4 my-2">
+					<img src="/static/images/cover/{{i['anime']}}.jpg" class="img-thumbnail clearfix float-left border-0 rounded img-fluid " alt="Cover">
+					<h4 class="text-success">
+						&nbsp;<a href="/anime/id{{ i['anime_id'] }}" class="text-success" >{{i['anime']}}</a>
+						<br>
+						&nbsp;Type:{{i['type']}} 
+						<br>
+						&nbsp;No. of episodes: {{i['episodes']}}
+						<br>
+						&nbsp;Score : {{i['score']}}
+						<br>
+						&nbsp;Members: {{i['members']}}
+						<br>
+						&nbsp;Status: {{ i['status'] }}
+						<br>
+						&nbsp;Episodes Watched: {{ i['episodes_watched'] }}
+						<br>
+						&nbsp;Times Rewatched: {{ i['rewatched'] }}
+						<br>
+					</h4>
+				</div>
+				<div class="col-md-6 my-2">
+					<h4>
+						Synopsis
+					</h4>
+					<p style="">{{i['synopsis']}}</p>
+				</div>
+				{% if current_user.is_authenticated %}
+				{% if current_user.username == username  %}
+				<div class="col-md-2 my-2">
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#Edit">Edit</button>
+					<div class="modal fade" id="Edit">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Edit</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" method="POST">
+										<div class="mx-auto my-5 form-group text-success">
+											<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status">
+												<option selected>Watching</option>
+												<option>Completed</option>
+												<option>On-Hold</option>
+												<option>Dropped</option>
+												<option>Plan to Watch</option>
+											</select>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="rewatch">Rewatched:</label>
+											<input type="number" step="any" min="0" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="rewatch" placeholder="How many times have you rewatched this anime?" value="0">
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Episodes Watched :</label>
+											<input type="number" min="0" max="{{ i['episodes'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="episode" placeholder="How many episodes have you watched of this anime?" value="0">
+											<p class="w-100 text-right">Out of {{ i['episodes'] }} episodes</p>
+										</div>
+										<input type="hidden" name="anime" value="{{ i['anime'] }}">
+										<input type="hidden" name="completed" value="{{ i['episodes'] }}">
+										<button class="btn btn-block btn-success" type="submit">Add</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<form action="#" method="POST">
+						<input type="hidden" name="del_list_anime" value="{{ i['anime'] }}">
+						<button type="submit" class="btn btn-success btn-block">
+							Remove from list
+						</button>
+					</form>
+				</div>
+				{% else %}
+				<div class="col-md-2 my-2">
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#addtolist">Add to list</button>
+					<div class="modal fade" id="addtolist">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Add to list</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" method="POST">
+										<div class="mx-auto my-5 form-group text-success">
+											<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status">
+												<option selected>Watching</option>
+												<option>Completed</option>
+												<option>On-Hold</option>
+												<option>Dropped</option>
+												<option>Plan to Watch</option>
+											</select>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="rewatch">Rewatched:</label>
+											<input type="number" step="any" min="0" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="rewatch" placeholder="How many times have you rewatched this anime?" value="0">
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Episodes Watched :</label>
+											<input type="number" min="0" max="{{ i['episodes'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="episode" placeholder="How many episodes have you watched of this anime?" value="0">
+											<p class="w-100 text-right">Out of {{ i['episodes'] }} episodes</p>
+										</div>
+										<input type="hidden" name="anime" value="{{ i['anime'] }}">
+										<input type="hidden" name="completed" value="{{ i['episodes'] }}">
+										<button class="btn btn-block btn-success" type="submit">Add</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% else %}
+				<div class="col-md-2 my-2">
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#Notlogged">Add to list</button>
+					<div class="modal fade" id="Notlogged">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Login In to Continue</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<h3>Please Log in to add this anime to your list</h3>
+									<a href="/registration">
+										<button class="btn btn-success btn-block" >Login/Register</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+			{% endfor %}
+			{% else %}
+			<h1 class="display-2 text-center"> Nothing Here in Anime List </h1>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

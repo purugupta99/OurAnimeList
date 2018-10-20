@@ -1,0 +1,166 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto">
+	<div class="row mx-auto text-success">
+		<div class="col-md-10 mx-auto">
+			{% if dict_list %}
+			{% for i in dict_list %}
+			<div class="row border-bottom">
+				<div class="col-md-4 my-2">
+					<img src="/static/images/manga/{{ i['manga'] }}.jpg" class="img-thumbnail clearfix float-left border-0 rounded img-fluid " alt="Cover">
+					<h4 class="text-success">
+						&nbsp;<a href="/manga/id{{i['manga_id']}}" class="text-success" >{{ i['manga'] }}</a>
+						<br>
+						&nbsp;Type : {{ i['type'] }}
+						<br>
+						&nbsp;No. of chapters : {{ i['chapters'] }}
+						<br>
+						&nbsp;No. of Volumes : {{ i['volumes'] }}
+						<br>
+						&nbsp;Score : 
+						<br>
+						&nbsp;Members: 
+						<br>
+						&nbsp;Volumes Read : {{ i['volumes_read'] }}
+						<br>
+						&nbsp;Chapters read: {{ i['chapters_read'] }}
+						<br>
+						&nbsp;Times Reread : {{ i['reread'] }}
+						<br>
+					</h4>
+				</div>
+				<div class="col-md-6 my-2">
+					<h4>
+						Synopsis
+					</h4>
+					<p style="">{{ i['synopsis'] }}</p>
+				</div>
+				{% if current_user.is_authenticated %}
+				{% if current_user.username == username %}
+				<div class="col-md-2 my-2">
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#Edit">Edit</button>
+					<div class="modal fade" id="Edit">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Edit</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" method="POST">
+										<div class="mx-auto my-5 form-group text-success">
+											<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status">
+												<option selected>Reading</option>
+												<option>Completed</option>
+												<option>On-Hold</option>
+												<option>Dropped</option>
+												<option>Plan to Read</option>
+											</select>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="rewatch">Reread:</label>
+											<input type="number" step="any" min="0" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="reread" placeholder="How many times have you reread this manga?" value="0" >
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Volumes Read :</label>
+											<input type="number" min="0" max="{{ i['volumes'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="volume" placeholder="How many volumes of this manga have you read?" required value="0">
+											<p class="w-100 text-right">Out of {{ dict['volumes_num'] }} volumes</p>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Chapters Read :</label>
+											<input type="number" min="0" max="{{ i['chapters'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="chapter" placeholder="How many chapters of this manga have you read?" required value="0">
+											<p class="w-100 text-right">Out of {{ i['chapters'] }} chapters</p>
+										</div>
+										<input type="hidden" name="manga" value="{{ i['manga'] }}">
+										<input type="hidden" name="chapters_num" value="{{ i['chapters'] }}">
+										<input type="hidden" name="volumes_num" value="{{ i['volumes'] }}">
+										<button class="btn btn-block btn-success" type="submit">Edit</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<form action="#" method="POST">
+						<input type="hidden" name="del_list_manga" value="{{ i['manga'] }}">
+						<button type="submit" class="btn btn-success btn-block">
+							Remove from list
+						</button>
+					</form>
+				</div>
+				{% else %}
+				<div class="col-md-2 my-2" >
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#addtolist">Add to List</button>
+					<div class="modal fade" id="addtolist">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Add to List</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" method="POST">
+										<div class="mx-auto my-5 form-group text-success">
+											<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status">
+												<option selected>Reading</option>
+												<option>Completed</option>
+												<option>On-Hold</option>
+												<option>Dropped</option>
+												<option>Plan to Read</option>
+											</select>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="rewatch">Reread:</label>
+											<input type="number" step="any" min="0" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="reread" placeholder="How many times have you reread this manga?" value="0" >
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Volumes Read :</label>
+											<input type="number" min="0" max="{{ i['volumes'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="volume" placeholder="How many volumes of this manga have you read?" required value="0">
+											<p class="w-100 text-right">Out of {{ dict['volumes_num'] }} volumes</p>
+										</div>
+										<div class="mx-auto my-5 form-group">
+											<label for="episode">Chapters Read :</label>
+											<input type="number" min="0" max="{{ i['chapters'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="chapter" placeholder="How many chapters of this manga have you read?" required value="0">
+											<p class="w-100 text-right">Out of {{ i['chapters'] }} chapters</p>
+										</div>
+										<input type="hidden" name="manga" value="{{ i['manga'] }}">
+										<input type="hidden" name="chapters_num" value="{{ i['chapters'] }}">
+										<input type="hidden" name="volumes_num" value="{{ i['volumes'] }}">
+										<button class="btn btn-block btn-success" type="submit">Add</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% else %}
+				<div class="col-md-2 my-2">
+					<button class="btn btn-success btn-block " type="button" data-toggle="modal" data-target="#notlogged">Add to List</button>
+					<div class="modal fade" id="notlogged">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-dark">
+									<h4 class="modal-title">Log In to continue</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body mx-auto">
+									<h3>Please Log in to add this anime to your list</h3>
+									<a href="/registration">
+										<button class="btn btn-success btn-block" >Login/Register</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+			{% endfor %}
+			{% else %}
+			<h1 class="display-2 text-center"> Nothing Here in Manga List </h1>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

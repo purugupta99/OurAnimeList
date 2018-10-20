@@ -1,0 +1,660 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+{% with flash_messages = get_flashed_messages() %}
+{% if flash_messages %}
+{% for msg in flash_messages %}
+<div class="alert alert-success alert-dismissible fade show col-md-4 mx-auto">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	{{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<style type="text/css">
+img.d-block{
+	filter: brightness( 70%);
+}
+</style>
+<div class="container-fluid mb-5 text-success">
+	<h2>Popular Anime</h2>
+	<div class="row">
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car1" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[0].rank}}" class="text-success dark">
+						<img src="/static/images/cover/{{top_anime[0].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[0].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(1,10) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success dark">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car2" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[0].rank}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[0].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[0].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[1].rank}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[1].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[1].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(2,10) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car3" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,2) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[2].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[2].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[2].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(3,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car4" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,3) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[3].rank}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[3].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[3].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(4,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car5" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,4) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[4].rank}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[4].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[4].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(5,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="car6" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,5) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/anime/id{{top_anime[5].rank}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[5].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[5].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(6,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/anime/id{{top_anime[i].id}}" class="text-success">
+						<img src="/static/images/cover/{{top_anime[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_anime[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<h2>Popular manga</h2>
+	<div class="row">
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar1" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[0].id}}" class="text-success dark">
+						<img src="/static/images/manga/{{top_manga[0].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[0].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(1,10) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success dark">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar2" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[0].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[0].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[0].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[1].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[1].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[1].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(2,10) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar3" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,2) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[2].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[2].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[2].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(3,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar4" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,3) %}  
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[3].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[3].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[3].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(4,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar5" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,4) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[4].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[4].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[4].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(5,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel slide col-md-2" data-ride="carousel" id="mcar6" data-pause="false" data-interval="1500">
+			<div class="carousel-inner w-100" style="height: 450px;">
+				{% for i in range(0,5) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+				<div class="carousel-item active border-right h-100">
+					<a href="/manga/id{{top_manga[5].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[5].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[5].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% for i in range(6,10) %}
+				<div class="carousel-item border-right h-100">
+					<a href="/manga/id{{top_manga[i].id}}" class="text-success">
+						<img src="/static/images/manga/{{top_manga[i].name_eng}}.jpg" class="d-block" height="360" width="270">
+						<div class="d-none d-md-block text-center my-0 pb-1">
+							<h5>{{top_manga[i].name_eng}}</h5>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Latest Anime Reviews</h2>
+			<hr>
+			<div class="container-fluid">
+				{% block reviews %}
+				{% for i in range(0,num_review,2) %}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{ recent_review[i]['anime'] }}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md">
+								<h3>
+									<a href="/anime/id{{ recent_review[i]['anime_id'] }}" class="text-success">
+										{{ recent_review[i]['anime'] }}
+									</a>
+								</h3>
+								<h4>{{ recent_review[i]['title'] }}</h4>
+								&emsp;{{ recent_review[i]['content'] }}
+								<div class="text-right">
+									{{ recent_review[i]['elapsed'] }} {{ recent_review[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_review[i]['username'] }}">{{ recent_review[i]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% if recent_review[i+1] %}
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{ recent_review[i+1]['anime'] }}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md">
+								<h3>
+									<a href="/anime/id{{ recent_review[i+1]['anime_id'] }}" class="text-success">
+										{{ recent_review[i+1].anime }}
+									</a>
+								</h3>
+								<h4>{{ recent_review[i+1].title }}</h4>
+								{{ recent_review[i+1].content }}
+								<div>
+									{{ recent_review[i+1]['elapsed'] }} {{ recent_review[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_review[i+1]['username'] }}">{{ recent_review[i+1]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<br>
+				{% endfor %}
+				{% endblock %}
+			</div>
+			<br>
+			<hr>
+			<br>
+			<h2>Latest Anime Recommendations</h2>
+			<hr>
+			<div class="container-fluid">
+				{% block recomed %}
+				{% for i in range(0,num_recommend,2) %}
+				<div class="row">
+					{% if recent_recommend[i] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{recent_recommend[i]['anime']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								If you liked
+								<h4>
+									<a href="/anime/id{{recent_recommend[i]['anime_id']}}" class="text-success">
+										{{recent_recommend[i]['anime']}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{recent_recommend[i]['recommend_anime']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{recent_recommend[i]['recommend_anime_id']}}" class="text-success">
+										{{recent_recommend[i]['recommend_anime']}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{recent_recommend[i]['reason']}}
+						</h5>
+						<div class="text-right">
+							{{ recent_recommend[i]['elapsed'] }} {{ recent_recommend[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_recommend[i]['username'] }}">{{ recent_recommend[i]['username'] }}</a> 
+						</div>
+					</div>
+					{% endif %}
+					{% if recent_recommend[i+1] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{recent_recommend[i+1].anime}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								If you liked
+								<h4>
+									<a href="/anime/id{{recent_recommend[i+1]['anime_id']}}" class="text-success">
+										{{recent_recommend[i+1].anime}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-1">
+								<img src="/static/images/cover/{{recent_recommend[i+1].recommend_anime}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{recent_recommend[i+1]['recommend_anime_id']}}" class="text-success">
+										{{recent_recommend[i+1].recommend_anime}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{recent_recommend[i+1].reason}}
+						</h5>
+						<div class="text-right">
+							{{ recent_recommend[i+1]['elapsed'] }} {{ recent_recommend[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_recommend[i+1]['username'] }}">{{ recent_recommend[i+1]['username'] }}</a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<hr>
+				{% endfor %}
+				{% endblock %}
+			</div>
+			<br>
+			<hr>
+			<br>
+			<h2>Latest Manga Reviews</h2>
+			<hr>
+			<div class="container-fluid">
+				{% block reviews_manga %}
+				{% for i in range(0,num_review_manga,2) %}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{ recent_review_manga[i]['manga'] }}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md">
+								<h3>
+									<a href="/manga/id{{ recent_review_manga[i]['manga_id'] }}" class="text-success">
+										{{ recent_review_manga[i]['manga'] }}
+									</a>
+								</h3>
+								<h4>{{ recent_review_manga[i]['title'] }}</h4>
+								&emsp;{{ recent_review_manga[i]['content'] }}
+								<div class="text-right">
+									{{ recent_review_manga[i]['elapsed'] }} {{ recent_review_manga[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_review_manga[i]['username'] }}">{{ recent_review_manga[i]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% if recent_review[i+1] %}
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{ recent_review_manga[i+1]['manga'] }}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md">
+								<h3>
+									<a href="/manga/id{{ recent_review_manga[i+1]['manga_id'] }}" class="text-success">
+										{{ recent_review_manga[i+1].manga }}
+									</a>
+								</h3>
+								<h4>{{ recent_review_manga[i+1].title }}</h4>
+								{{ recent_review_manga[i+1].content }}
+								<div>
+									{{ recent_review_manga[i+1]['elapsed'] }} {{ recent_review_manga[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_review_manga[i+1]['username'] }}">{{ recent_review_manga[i+1]['username'] }}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<br>
+				{% endfor %}
+				{% endblock %}
+			</div>
+			<br>
+			<hr>
+			<br>
+			<h2>Latest Manga Recommendations</h2>
+			<hr>
+			<div class="container-fluid">
+				{% block recommend_manga %}
+				{% for i in range(0,num_recommend,2) %}
+				<div class="row">
+					{% if recent_recommend_manga[i] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{recent_recommend_manga[i]['manga']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								If you liked
+								<h4>
+									<a href="/manga/id{{recent_recommend_manga[i]['manga_id']}}" class="text-success">
+										{{recent_recommend_manga[i]['manga']}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{recent_recommend_manga[i]['recommended_manga']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{recent_recommend[i]['recommend_anime_id']}}" class="text-success">
+										{{recent_recommend_manga[i]['recommended_manga']}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{recent_recommend_manga[i]['reason']}}
+						</h5>
+						<div class="text-right">
+							{{ recent_recommend_manga[i]['elapsed'] }} {{ recent_recommend_manga[i]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_recommend_manga[i]['username'] }}">{{ recent_recommend_manga[i]['username'] }}</a> 
+						</div>
+					</div>
+					{% endif %}
+					{% if recent_recommend[i+1] %}
+					<div class="col-md-6 border-right">
+						<div class="row">
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{recent_recommend_manga[i+1]['manga']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								If you liked
+								<h4>
+									<a href="/anime/id{{recent_recommend[i+1]['anime_id']}}" class="text-success">
+										{{recent_recommend_manga[i+1]['manga']}}
+									</a>
+								</h4>
+							</div>
+							<div class="col-md-1">
+								<img src="/static/images/manga/{{recent_recommend_manga[i+1]['recommended_manga']}}.jpg" height="90" width="67.5">
+							</div>
+							<div class="col-md-5">
+								Then you might like
+								<h4>
+									<a href="/anime/id{{recent_recommend_manga[i+1]['recommended_manga_id']}}" class="text-success">
+										{{recent_recommend_manga[i+1]['recommend_manga']}}
+									</a>
+								</h4>
+							</div>
+						</div>
+						<h5>
+							{{recent_recommend_manga[i+1]['reason']}}
+						</h5>
+						<div class="text-right">
+							{{ recent_recommend_manga[i+1]['elapsed'] }} {{ recent_recommend_manga[i+1]['unit'] }} ago by <a class="text-success" href="/userprofile/{{ recent_rerecommend_manga[i+1]['username'] }}">{{ recent_recommend_manga[i+1]['username'] }}</a>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<hr>
+				{% endfor %}
+				{% endblock %}
+			</div>
+			<br>			
+		</div>
+	</div>
+</div>
+{% endblock %}

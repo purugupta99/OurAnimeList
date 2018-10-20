@@ -1,0 +1,44 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto">
+	<div class="row mx-auto text-success">
+		<div class="col-md-10 mx-auto">
+			{% for ani in manga %}
+			<div class="row border-bottom">
+				<div class="col-md-5 my-2">
+					<img src="/static/images/manga/{{ ani['name'] }}.jpg" class="img-thumbnail clearfix float-left border-0 rounded img-fluid " alt="Cover">
+					<h4 class="text-success">
+						&nbsp;<a href="/manga/id{{ani['id']}} " class="text-success" >{{ ani['name'] }}</a>
+						<br>
+						&nbsp;{{ ani['type'] }}
+						<br>
+						{%- if ani['chapters_num']>=0 -%}
+						&nbsp;{{ ani['chapters_num'] }}
+						{%- else -%}
+						&nbsp;Unkown
+						{%- endif -%}
+						<br>
+						{%- if ani['volumes_num']>=0 -%}
+						&nbsp;{{ ani['volumes_num'] }}
+						{%- else -%}
+						&nbsp;Unkown
+						{%- endif -%}
+						<br>
+						&nbsp;Score : {{ ani['score'] }}
+						<br>
+						&nbsp;Members: {{ ani['member'] }}
+						<br>
+					</h4>
+				</div>
+				<div class="col-md-7 my-2">
+					<h4>
+						Synopsis
+					</h4>
+					<p style="">{{ ani['synopsis'] }}</p>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}

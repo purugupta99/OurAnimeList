@@ -1,0 +1,687 @@
+{% extends "mainlayout.html" %}
+{% block content %}
+<div class="container-fluid mx-auto mb-5">
+	<div class="row">
+		<div class="col-md-2 mx-3 text-success border-success border-right mb-5">
+			<img src="/static/images/manga/{{ dict['name_eng'] }}.jpg">
+			<hr>
+			<div class="my-3">
+				<h5><strong>Alternative Titles</strong></h5>
+				<hr class="bg-light">
+				<div class="ml-2">
+					<strong>
+						English:
+					</strong>
+					{{ dict['altername_eng'] }}<br>
+					<strong>
+						Synomyms:
+					</strong>
+					{{dict['synonyms']}}<br>
+					<strong>
+						Japanese:
+					</strong>
+					{{dict['name_jap']}}
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-md-9 mx-3 text-success">
+			<div class="container-fluid border-success">
+				<!-- Nav tabs -->
+				<ul class="nav">
+					<li class="nav-item mx-2 my-2">
+						<a class="nav-link  px-0 py-0" data-toggle="pill" href="#details">
+							<button class="btn btn-block btn-outline-success border-0">
+								Details
+							</button>
+						</a>
+					</li>
+					<li class="nav-item mx-2 my-2">
+						<a class="nav-link px-0 py-0" data-toggle="pill" href="#reviews">
+							<button class="btn btn-block btn-outline-success border-0">
+								Reviews
+							</button>
+						</a>
+					</li>
+					<li class="nav-item mx-2 my-2">
+						<a class="nav-link px-0 py-0" data-toggle="pill" href="#recommendation">
+							<button class="btn btn-block btn-outline-success border-0">
+								Recommendations
+							</button>
+						</a>
+					</li>
+					<li class="nav-item mx-2 my-2">
+						<a class="nav-link px-0 py-0" data-toggle="pill" href="#stats">
+							<button class="btn btn-block btn-outline-success border-0">
+								Stats
+							</button>
+						</a>
+					</li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane active container-fluid" id="details">
+						<div class="container-fluid">
+							<div class="row my-2">
+								<div class="col-md-2 border-right">
+									&emsp;Score<br>
+									&emsp;&nbsp;{{ dict['score'] }}
+								</div>
+								<div class="col-md-8">
+									Rank #{{ dict['rank'] }}&emsp;&emsp;&emsp;&emsp;&emsp;<br>
+									{{ dict['premiere'] }}&emsp;&emsp;
+									{{ dict['cast_type'] }}&emsp;&emsp;
+									{{ dict['studios'] }}
+								</div>
+							</div>
+							<div class="row mt-3 mb-5">
+								<div class="col-md-12">
+									<button class="btn btn-success " type="button" data-toggle="modal" data-target="#Addtolist">
+										Add to my List
+									</button>
+									<div class="modal fade" id="Addtolist">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-dark">
+													<h4 class="modal-title">Add to List</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<form action="#" method="POST">
+														<div class="mx-auto my-5 form-group text-success">
+															<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="status">
+																<option selected>Reading</option>
+																<option>Completed</option>
+																<option>On-Hold</option>
+																<option>Dropped</option>
+																<option>Plan to Read</option>
+															</select>
+														</div>
+														<div class="mx-auto my-5 form-group">
+															<label for="rewatch">Reread:</label>
+															<input type="number" step="any" min="0" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="reread" placeholder="How many times have you reread this manga?" value="0" >
+														</div>
+														<div class="mx-auto my-5 form-group">
+															<label for="episode">Volumes Read :</label>
+															<input type="number" min="0" max="{{ dict['volumes_num'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="volume" placeholder="How many volumes of this manga have you read?" required value="0">
+															<p class="w-100 text-right">Out of {{ dict['volumes_num'] }} volumes</p>
+														</div>
+														<div class="mx-auto my-5 form-group">
+															<label for="episode">Chapters Read :</label>
+															<input type="number" min="0" max="{{ dict['chapters_num'] }}" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="chapter" placeholder="How many chapters of this manga have you read?" required value="0">
+															<p class="w-100 text-right">Out of {{ dict['chapters_num'] }} chapters</p>
+														</div>
+														<input type="hidden" name="manga" value="{{ dict['name_eng'] }}">
+														<input type="hidden" name="chapters_num" value="{{ dict['chapters_num'] }}">
+														<input type="hidden" name="volumes_num" value="{{ dict['volumes_num'] }}">
+														<button class="btn btn-block btn-success" type="submit">Add</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div><!--
+									<button class="btn btn-success " type="button" data-toggle="modal" data-target="#Addtofav">
+										Add to Favorite
+									</button>
+									<div class="modal fade" id="Addtofav">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-dark">
+													<h4 class="modal-title">Add to Favorites</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<form action="#">
+														<div class="form-group">
+															<div class="form-group col-md-12 mx-auto my-5">
+																<label >Review:</label>
+																<textarea class="form-control" rows="6" id="editbio" name="Review" placeholder="Would You like to add a Review"></textarea>
+															</div>
+														</div>
+														<button class="btn btn-block btn-success" type="submit">Add to Favorites</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>-->
+									{%- if current_user.is_authenticated -%}
+									<button class="btn btn-success " type="button" data-toggle="modal" data-target="#GiveScore">
+										Give a score
+									</button>
+									<div class="modal fade" id="GiveScore">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-dark">
+													<h4 class="modal-title">Give a Score to this Anime</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<form action="#" method="POST">
+														<div class="form-group">
+															<div class="form-group col-md-12 mx-auto my-5">
+																<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="score" aria-describedby="scorehelp">
+																	<option selected>10</option>
+																	<option>9</option>
+																	<option>8</option>
+																	<option>7</option>
+																	<option>6</option>
+																	<option>5</option>
+																	<option>4</option>
+																	<option>3</option>
+																	<option>2</option>
+																	<option>1</option>
+																</select>
+																<small id="scorehelp" class="text-muted" >
+																	10 being the best and 1 being the worst score. 
+																</small>
+																<input type="hidden" name="manga_name" value="{{dict['name_eng']}}">
+															</div>
+														</div>
+														<button class="btn btn-block btn-success" type="submit">Submit Your Score</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="row my-5">
+								<h5>Synopsis</h5>
+								<div class="col-md-12 border-top pt-3">
+									{{ dict['synopsis'] }}
+								</div>
+							</div>
+							<h5 >Characters &amp; Voice Actors </h5>
+							<div class="row">
+								<div class="col-md-6 border-top pt-2">
+									<table class="table table-striped">
+										{% for i in range(0,characters_num,2) %}
+										<tr>
+											<td class="border-top-0 mx-0 px-2" style="width: 35px; ">
+												<img alt="Not Available" src="/static/images/manga_characters/{{ dict['name_eng'] }}/{{ characters[i]['name'] }}.jpg" height="48" width="34.5">
+											</td>
+											<td class="border-top-0 mx-0 px-0">
+												<a href="/mangachar/id{{ characters[i]['id'] }}" class="text-success">
+												{{ characters[i]['name'] }}</a><br/>
+												<small>{{ characters[i]['role'] }}</small>
+											</td>
+										</tr>
+										{% endfor %}
+									</table>
+								</div>
+								<div class="col-md-6 border-top pt-2">
+									<table class="table table-striped">
+										{% for i in range(1,characters_num,2) %}
+										{% if characters[i] %}
+										<tr>
+											<td class="border-top-0 mx-0 px-2" style="width: 35px; ">
+												<img alt="Not Available" src="/static/images/manga_characters/{{ dict['name_eng'] }}/{{ characters[i]['name'] }}.jpg" height="48" width="34.5">
+											</td>
+											<td class="border-top-0 mx-0 px-0">
+												<a href="/mangachar/id{{ characters[i]['id'] }}" class="text-success" >
+												{{ characters[i]['name'] }}</a><br/>
+												<small>{{ characters[i]['role'] }}</small>
+											</td>
+										</tr>
+										{% endif %}
+										{% endfor %}
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane container-fluid" id="reviews">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6">
+									<h3>Reviews</h3>
+								</div>
+								<div class="col-md-6 my-3">
+									<button class="float-right btn btn-success" type="button" data-toggle="modal" data-target="#Review">
+										Add your Review
+									</button>
+									<div class="modal fade" id="Review">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-dark">
+													<h4 class="modal-title">Reviews</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<form action="#" method="POST">
+														<div class="mx-auto my-5 form-group col-md-12">
+															<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="review_title" placeholder="Review Title">
+														</div>
+														<div class="form-group text-center col-md-12 mx-auto my-5">
+															<textarea class="form-control" rows="5" id="review" name="review_content" placeholder="Enter Your Review Here"></textarea>
+														</div>
+														<input type="hidden" name="manga_review" value="{{dict['name_eng']}}">
+														<button class="btn btn-block btn-success" type="submit">Add Your Review</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-fluid">
+							{% for i in range(0,reviews_num,2) %}
+							<div class="row border-bottom">
+								<div class="col-md-6 my-2 border-right">
+									<h4 class="row">
+										<div class="col-md-8 mr-auto d-inline">
+											{{ reviews[i]['title'] }}
+										</div>
+										{%- if current_user.username == reviews[i]['username']  -%}
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReview">
+												<small><i>Edit</i></small>
+											</button>
+											<div class="modal fade" id="EditReview">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Edit Review</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews[i]['title'] }}">
+																</div>
+																<div class="form-group text-center col-md-12 mx-auto my-5">
+																	<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews[i]['content'] }}</textarea>
+																</div>
+																<input type="hidden" name="edit_manga_review" value="{{dict['name_eng']}}">
+																<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#DeleteReview">
+												<small><i>Delete</i></small>
+											</button>
+											<div class="modal fade" id="DeleteReview">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Delete Review</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<label class="form-check-label text-success">
+																		<input class="form-check-input" type="checkbox" name="delete_review" value="on" required>Are You Sure you want to delete your review?
+																	</label>
+																</div>
+																<button class="btn btn-block btn-success" type="submit">Delete Your Review</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</h4>
+									<p>{{ reviews[i]['content'] }}</p>
+									<div class="my-0 text-right">
+										By <a href="" class="text-success">{{ reviews[i]['username'] }}</a>
+									</div>
+								</div>
+								{% if reviews[i+1] %}
+								<div class="col-md-6 my-2">
+									<h4 class="row">
+										<div class="col-md-8 mr-auto d-inline">
+											{{ reviews[i+1]['title'] }}
+										</div>
+										{%- if current_user.username == reviews[i+1]['username']  -%}
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditReview">
+												<small><i>Edit</i></small>
+											</button>
+											<div class="modal fade" id="EditReview">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Edit Review</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="/anime/id{{num}}" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_review_title" placeholder="Review Title" value="{{ reviews[i]['title'] }}">
+																</div>
+																<div class="form-group text-center col-md-12 mx-auto my-5">
+																	<textarea class="form-control" rows="5" id="review" name="edit_review_content" placeholder="Enter Your Review Here">{{ reviews[i+1]['content'] }}</textarea>
+																</div>
+																<input type="hidden" name="edit_anime_review" value="{{dict['name_eng']}}">
+																<button class="btn btn-block btn-success" type="submit">Edit Your Review</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#DeleteReview">
+												<small><i>Delete</i></small>
+											</button>
+											<div class="modal fade" id="DeleteReview">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Delete Review</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="/anime/id{{num}}" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<label class="form-check-label text-success">
+																		<input class="form-check-input" type="checkbox" name="delete_review" value="on" required>Are You Sure you want to delete your review?
+																	</label>
+																</div>
+																<button class="btn btn-block btn-success" type="submit">Delete Your Review</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</h4>
+									<p>{{ reviews[i+1]['content'] }}</p>
+									<div class="my-0 text-right">
+										By <a href="" class="text-success">{{ reviews[i+1]['username'] }}</a>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="tab-pane container-fluid" id="recommendation">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6 mr-auto">
+									<h3 class="">Recommendations</h3>
+								</div>
+								<div class="col-md-6">
+									<button class="float-right btn btn-success" type="button" data-toggle="modal" data-target="#Recommend">
+										Recommend An Manga
+									</button>
+									<div class="modal fade" id="Recommend">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-dark">
+													<h4 class="modal-title">Recommendation</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+												<div class="modal-body">
+													<form action="#" method="POST">
+														<div class="mx-auto my-5 form-group col-md-12">
+															<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0 text-truncate " style="background-color: transparent;" name="recommended_manga">
+																{% for manga in mangas %}
+																<option>{{ manga.name_eng }}</option>
+																{% endfor %}
+															</select>
+														</div>
+														<div class="form-group text-center col-md-12 mx-auto my-5">
+															<textarea class="form-control" rows="5" id="recommend" name="reason" placeholder="Enter Your Reason for Recommendation Here"></textarea>
+														</div>
+														<input type="hidden" name="manga_recommend" value="{{dict['name_eng']}}">
+														<button class="btn btn-block btn-success" type="submit">Add Your Recommendation</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="container-fluid">
+							{% for i in range(0,recommend_num,2) %}
+							<div class="row border-bottom">
+								<div class="col-md-6 border-right">
+									<h4 class="row">
+										<div class="col-md-8 mr-auto d-inline">
+											<a href="/manga/id{{ dict_recommend[i]['manga_id'] }}" class="text-success">
+												{{ dict_recommend[i]['recommended_manga'] }}
+											</a>
+										</div>
+										{%- if current_user.username == dict_recommend[i]['username']  -%}
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditRecommendation">
+												<small><i>Edit</i></small>
+											</button>
+											<div class="modal fade" id="EditRecommendation">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Edit Recommendation</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<select class="form-control form-control-lg text-success border-success border-left-0 border-right-0 border-top-0 text-truncate " style="background-color: transparent;" name="edit_recommended_manga">
+																		{% for manga in mangas %}
+																		<option>{{ manga.name_eng }}</option>
+																		{% endfor %}
+																	</select>
+																</div>
+																<div class="form-group text-center col-md-12 mx-auto my-5">
+																	<textarea class="form-control" rows="5" id="recommend" name="edit_reason" >{{ dict_recommend[i]['reason'] }}</textarea>
+																</div>
+																<input type="hidden" name="manga_recommend" value="{{dict['name_eng']}}">
+																<button class="btn btn-block btn-success" type="submit">Edit Your Recommendation</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#DeleteRecommendation">
+												<small><i>Delete</i></small>
+											</button>
+											<div class="modal fade" id="DeleteRecommendation">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Delete Recommendation</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<label class="form-check-label text-success">
+																		<input class="form-check-input" type="checkbox" name="delete_recommend" value="on" required>Are You Sure you want to delete your recommendation?
+																	</label>
+																</div>
+																<button class="btn btn-block btn-success" type="submit">Delete Your Recommendation</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</h4>
+									<p>{{ dict_recommend[i]['reason'] }}</p>
+									<div class="my-0 text-right">
+										By <a href="/userprofile/{{ dict_recommend[i]['username'] }}" class="text-success">{{ dict_recommend[i]['username'] }}</a>
+									</div>
+								</div>
+								{% if dict_recommend[i+1] %}
+								<div class="col-md-6">
+									<h4 class="row">
+										<div class="col-md-10 mr-auto d-inline">
+											{{ dict_recommend[i+1]['recommend_anime'] }}
+										</div>
+										{%- if current_user.username == dict_recommend[i+1]['username']  -%}
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#EditRecommendation">
+												<small><i>Edit</i></small>
+											</button>
+											<div class="modal fade" id="EditRecommendation">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Edit Recommendation</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<input type="text" class="form-control border-success border-left-0 border-right-0 border-top-0" style="background-color: transparent;" name="edit_recommend_anime" value="{{ dict_recommend[i]['recommend_anime'] }}" required>
+																</div>
+																<div class="form-group text-center col-md-12 mx-auto my-5">
+																	<textarea class="form-control" rows="5" id="recommend" name="edit_reason" >{{ dict_recommend[i]['reason'] }}</textarea>
+																</div>
+																<input type="hidden" name="anime_recommend" value="{{dict['name_eng']}}">
+																<button class="btn btn-block btn-success" type="submit">Edit Your Recommendation</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 text-right d-inline my-0">
+											<button class="btn btn-outline-success border-0 " type="button" data-toggle="modal" data-target="#DeleteRecommendation">
+												<small><i>Delete</i></small>
+											</button>
+											<div class="modal fade" id="DeleteRecommendation">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header bg-dark">
+															<h4 class="modal-title">Delete Recommendation</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" method="POST">
+																<div class="mx-auto my-5 form-group col-md-12">
+																	<label class="form-check-label text-success">
+																		<input class="form-check-input" type="checkbox" name="delete_recommend" value="on" required>Are You Sure you want to delete your recommendation?
+																	</label>
+																</div>
+																<button class="btn btn-block btn-success" type="submit">Delete Your Recommendation</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endif %}
+									</h4>
+									<p>{{ dict_recommend[i+1]['reason'] }}</p>
+									<div class="my-0 text-right">
+										By <a href="" class="text-success">{{ dict_recommend[i+1]['username'] }}</a>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="tab-pane container-fluid" id="stats">
+						<div class="container-fluid">
+							<h5>Summary Stats</h5>
+							<div class="row">
+								<div class="col-md-3">
+									<strong>Reading</strong>:{{ dict_manga['reading'] }}<br>
+									<strong>Comleted</strong>:{{ dict_manga['completed'] }}<br>
+									<strong>On-Hold</strong>:{{ dict_manga['onhold'] }}<br>
+									<strong>Dropped</strong>:{{ dict_manga['dropped'] }}<br>
+									<strong>Plan to Read</strong>:{{ dict_manga['planned'] }}<br>
+									<strong>Total</strong>:{{ dict_manga['total'] }}<br>
+								</div>
+								<div class="col-md-3">
+									<strong>
+										Type:
+									</strong>
+									{{dict['cast_type']}}<br>
+									<strong>
+										Volumes:
+									</strong>
+									{%- if dict['volumes_num'] > 0 -%}
+									{{dict['volumes_num']}}<br>
+									{%- else -%}
+									Unknown<br>
+									{%- endif -%}
+									<strong>
+										Chapters:
+									</strong>
+									{%- if dict['chapters_num'] > 0 -%}
+									{{dict['chapters_num']}}<br>
+									{%- else -%}
+									Unknown<br>
+									{%- endif -%}
+									<strong>
+										Status:
+									</strong>
+									{{dict['status']}}<br>
+									<strong>
+										Published:
+									</strong>
+									{{dict['published']}}<br>
+								</div>
+								<div class="col-md-3">
+									<strong>
+										Genre:
+									</strong>
+									{{dict['genres']}}<br>
+									<strong>
+										Authors:
+									</strong>
+									{{dict['authors']}}<br>
+									<strong>
+										Serialization:
+									</strong>
+									{{dict['serialization']}}<br>
+								</div>
+								<div class="col-md-3">
+									<strong>
+										Score:
+									</strong>
+									{{dict['score']}}<br>
+									<strong>
+										Rank:
+									</strong>
+									#{{dict['rank']}}<br>
+									<strong>
+								</div>
+							</div>
+							<div class="row my-4">
+								<div class="col-md-12">
+									<h5>Score Stats</h5>
+									<hr>
+									{% for i in range(10,0,-1) %}
+									{% if score_stats[0]!=0 %}
+									<div class="progress my-3" style="background-color: transparent;">
+										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: {{ score_stats[i]/score_stats[0]}}%;">{{ i }}</div>
+										&nbsp;&nbsp;{{ score_stats[i]/score_stats[0] }}% ( {{ score_stats[i] }} votes)
+									</div>
+									{% else %}
+									<div class="progress my-3" style="background-color: transparent;">
+										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%;">{{ i }}</div>
+										&nbsp;&nbsp;0% (0 votes)
+									</div>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+{% endblock %}
