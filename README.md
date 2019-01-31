@@ -4,7 +4,8 @@
 	PURU GUPTA
 
 # FEATURES
-*** OurAnimeList is an anime and manga networking and cataloging application website based on MyAnimeList. The site provides its users with a list-like system to organize and score anime and manga. It facilitates finding users who share similar tastes and provides a large database on anime and manga. ***
+
+## OurAnimeList is an anime and manga networking and cataloging application website based on MyAnimeList. The site provides its users with a list-like system to organize and score anime and manga. It facilitates finding users who share similar tastes and provides a large database on anime and manga. 
 
 * Login/Registration functionality
 * User Profile Management
